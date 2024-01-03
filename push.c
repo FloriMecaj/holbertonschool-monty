@@ -1,22 +1,30 @@
 #include "monty.h"
+/**
+* push -pushes a new element into the stack
+* @stack: -points to the head of the stack
+* @line_number: holds value for the line number in monty file
+*/
 
 void push(stack_t **stack, unsigned int line_number)
 {
     stack_t *newnode = malloc(sizeof(stack_t));
 
     if (newnode == NULL)
+    {
         printf("Error: malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
     
     newnode->n = line_number;
     newnode->next = NULL;
     newnode->prev = NULL;
-    stack_t *tmp = NULL;
 
     if (*stack == NULL)
         *stack = newnode;
-    
-    tmp = *stack;
-    newnode->next = tmp;
-    tmp->prev = newnode;
-    *stack = newnode;
+    else
+    {
+        newnode->next = *stack;
+        *stack->prev = newnode;
+        *stack = newnode;
+    }
 }
