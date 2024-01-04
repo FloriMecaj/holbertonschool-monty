@@ -6,7 +6,7 @@
 *Return: (structures[i].f)
 */
 
-void (*getfunction(char *opcode)) (stack_t **stack, unsigned int line_number)
+void (*getfunction(char *opcode))(stack_t **stack, unsigned int line_number)
 {
 	int i = 0;
 	instruction_t structures[] = {

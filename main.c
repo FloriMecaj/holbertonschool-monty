@@ -1,16 +1,26 @@
-#include"monty.h"
+#include "monty.h"
+#define MAX_SIZE 100
 
-
-int main()
+int main(int argc, char **argv)
 {
-	stack_t *top = NULL;
+	FILE *file;
+	char buffer[MAX_SIZE];
+	char *opcode;
+	char *number;
 
-	push(&top, 0);
-	push(&top, 0);
-	add(&top, 0);
-	pint(&top, 0);
-	pop(&top, 0);
-	pall(&top, 0);
-
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\nError: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	file = fopen(argv[1], "r");
+	if (file == NULL)
+		printf("error");
+	while(fgets(buffer, MAX_SIZE, file))
+	{
+		opcode = strtok(buffer, " ");
+		number = strtok(NULL, " ");
+	}
+	
 	return 0;
 }
