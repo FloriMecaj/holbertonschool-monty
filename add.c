@@ -1,4 +1,4 @@
-include"monty.h"
+#include "monty.h"
 
 /**
  * add -adds the top 2 values of the stack
@@ -31,6 +31,6 @@ void add(stack_t **stack, unsigned int line_number)
 	}
 	sum = (*stack)->n + (*stack)->next->n;
 	(*stack)->next->n = sum;
-	*stack = (*stack->next);
+	*stack = (*stack)->next;
 	free(tmp);
 }

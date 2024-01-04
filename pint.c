@@ -1,4 +1,4 @@
-include"monty.h"
+#include "monty.h"
 /**
 * pint -prints the top value of the stack
 * @stack: -points to the head of the stack
@@ -12,5 +12,5 @@ void pint(stack_t **stack, unsigned int line_number)
         fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
         exit(EXIT_FAILURE);
     }
-    printf(%d\n, (*stack)->n);
+    printf("%d\n", (*stack)->n);
 }
