@@ -25,8 +25,7 @@ int main(int argc, char **argv)
 	while(fgets(buffer, MAX_SIZE, file) != NULL)
 	{
 		token = strtok(buffer, " ");
-		if (token == "\0")
-			continue;
+
 		strcpy(command, token);
 		if (is_comment(token,line_number) == 1)
 			continue;
