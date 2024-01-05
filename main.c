@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	while(fgets(buffer, MAX_SIZE, file) != NULL)
 	{
 		token = strtok(buffer, " ");
-
+i
 		strcpy(command, token);
 		if (is_comment(token,line_number) == 1)
 			continue;
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			p_func = getfunction(token);
+			p_func = getfunction(command);
 			p_func(&top, line_number);
 		}
 		line_number++;
