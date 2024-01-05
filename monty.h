@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+extern int n;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -43,4 +44,8 @@ void pint(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void (*getfunction(char *opcode))(stack_t **stack, unsigned int line_number);
+void freestack(stack_t *stack);
+int is_number(char *token);
+int is_comment(char *token, int line_counter);
+void not_int_err(unsigned int line);
 #endif
