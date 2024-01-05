@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	char buffer[MAX_SIZE];
 	unsigned int line_number = 1;
 	stack_t *top = NULL;
-	char *token, command[1024];
+	char *token, token2[1024];
 	FILE *file;
 
 	if (argc != 2)
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	{
 		token = strtok(buffer, " ");
 i
-		strcpy(command, token);
+		strcpy(token2, token);
 		if (is_comment(token,line_number) == 1)
 			continue;
 		if (strcmp(token, "push") == 0)
@@ -35,12 +35,12 @@ i
 			if (token == NULL || is_number(token) == -1)
 				not_int_err(line_number);
 			number = atoi(token);
-			p_func = getfunction(command);
+			p_func = getfunction(token2);
 			p_func(&top, line_number);
 		}
 		else
 		{
-			p_func = getfunction(command);
+			p_func = getfunction(token);
 			p_func(&top, line_number);
 		}
 		line_number++;
