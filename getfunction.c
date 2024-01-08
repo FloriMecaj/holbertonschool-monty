@@ -1,28 +1,31 @@
 #include "monty.h"
 
 /**
-*getfunction - function that returns a pointer to respective function
-*@line_number: -holds the value for the line number
-*Return: (structures[i].f)
-*/
+ * get_op - selects the correct function to perform the operation
+ * @token: The operator passed as an argument to the program
+ *
+ * Return: A pointer to the function that corresponds to the operator,
+ *         or NULL if no such function is found.
+ */
 
-void (*getfunction(char *opcode))(stack_t **stack, unsigned int line_number)
+void (*get_op(char *token))(stack_t **stack, unsigned int line_number)
 {
-	int i = 0;
-	instruction_t structures[] = {
+	instruction_t op_funcs[] = {
 		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},
 		{"swap", swap},
 		{"add", add},
+		{"nop", nop},
 		{NULL, NULL}
 	};
-	while (structures[i].opcode)
-	{
-		if (strcmp(structures[i].opcode, opcode) == 0)
-			return (structures[i].f);
+	int i = 0;
 
+	while (op_funcs[i].opcode)
+	{
+		if (strcmp(token, op_funcs[i].opcode) == 0)
+			return (op_funcs[i].f);
 		i++;
 	}
 	return (NULL);

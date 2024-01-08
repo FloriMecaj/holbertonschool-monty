@@ -1,34 +1,20 @@
 #include "monty.h"
 
 /**
- * swap -swaps the most recent 2 nodes values
- * @stack: -points to the head of the stack
- * @line_number: -holds the value of the respective line
+ * swap - swaps the top two elements of the stack.
+ * @stack: double pointer to the head of the stack
+ * @line_number: the number of the line in file
+ * Return: void
  */
 
 void swap(stack_t **stack, unsigned int line_number)
 {
-	int nr_nodes = 0;
-	int n;
-	stack_t *tmp;
-
-	if (*stack == NULL)
-		return;
-
-	tmp = *stack;
-
-	while(tmp != NULL)
+	if (*stack == NULL || (*stack)->next == NULL)
 	{
-		nr_nodes++;
-		tmp = tmp->next;
-	}
-	if (nr_nodes < 2)
-	{
-		fprintf(stderr, "L%d: can't swap, stack too short", line_number);
+		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	n = (*stack)->n;
+	int temp = (*stack)->n;
 	(*stack)->n = (*stack)->next->n;
-	(*stack)->next->n = n;
-
+	(*stack)->next->n = temp;
 }

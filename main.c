@@ -1,52 +1,52 @@
 #include "monty.h"
-#define MAX_SIZE 100
-int number;
 
-int main(int argc, char **argv)
+/**
+ * main - Entry point of the program.
+ * @argc: The number of command-line arguments.
+ * @argv: An array containing the command-line arguments as strings.
+ * Return: 0 upon success, other values for errors.
+ */
+
+int main(int argc, char *argv[])
 {
-	void (*p_func)(stack_t **, unsigned int);
-	char buffer[MAX_SIZE];
-	unsigned int line_number = 1;
-	stack_t *top = NULL;
-	char *token, token2[1024];
-	FILE *file;
-
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	file = fopen(argv[1], "r");
-	if (file == NULL)
+	char *filename = argv[1];
+	FILE *script_file = fopen(filename, "r");
+
+	if (script_file == NULL)
 	{
-		fprintf(stderr, "USAGE: monty file\n");
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-	while(fgets(buffer, MAX_SIZE, file) != NULL)
-	{
-		token = strtok(buffer, " ");
-i
-		strcpy(token2, token);
-		if (is_comment(token,line_number) == 1)
-			continue;
-		if (strcmp(token, "push") == 0)
-		{
-			token = strtok(NULL, " ");
-			if (token == NULL || is_number(token) == -1)
-				not_int_err(line_number);
-			number = atoi(token);
-			p_func = getfunction(token2);
-			p_func(&top, line_number);
-		}
-		else
-		{
-			p_func = getfunction(token);
-			p_func(&top, line_number);
-		}
-		line_number++;
+	stack_t *stack = NULL;
+	char *line = NULL;
+	size_t len = 0;
+	unsigned int line_number = 0;
 
+	while (getline(&line, &len, script_file) != -1)
+	{
+		line_number++;
+		char *token = strtok(line, " \t\n");
+
+		if (token == NULL || token[0] == '#')
+			continue;
+		void (*op_func)(stack_t **, unsigned int) = get_op(token);
+
+		if (op_func == NULL)
+		{
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, token);
+			free(line), fclose(script_file);
+			free_stack(&stack);
+			exit(EXIT_FAILURE);
+		}
+		op_func(&stack, line_number);
 	}
-	fclose(file);
-	freestack(top);
-	return (0);
+	free(line);
+	fclose(script_file);
+	free_stack(&stack);
+	return (EXIT_SUCCESS);
 }

@@ -1,43 +1,18 @@
-#include"monty.h"
+#include "monty.h"
 
-void freestack(stack_t *stack)
+/**
+ * free_stack - frees a stack_t stack.
+ * @stack: pointer to the head of a stack_t stack.
+ * Return: void
+ */
+
+void free_stack(stack_t **stack)
 {
-	if (stack == NULL)
-		return;
-	if (stack->next != NULL)
+	while (*stack)
 	{
-		freestack(stack->next);
+		stack_t *temp = (*stack)->next;
+
+		free(*stack);
+		*stack = temp;
 	}
-	free(stack);
-}
-
-int is_number(char *token)
-{
-	int i;
-
-	if (token == NULL)
-		return (-1);
-
-	for (i = 0; token[i] != '\0'; i++)
-	{
-		if (token[i] != '-' && isdigit(token[i]) == 0)
-			return (-1);
-	}
-	return (1);
-}
-
-int is_comment(char *token, int line_counter)
-{
-	if (token == NULL || token[0] == '#')
-	{
-	line_counter++;
-	return (1);
-	}
-	return (-1);
-}
-
-void not_int_err(unsigned int line)
-{
-	fprintf(stderr, "L%u: usage: push integer\n", line);
-	exit(EXIT_FAILURE);
 }

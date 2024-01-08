@@ -1,32 +1,51 @@
 #include "monty.h"
 
 /**
-* push -pushes a new element into the stack
-* @stack: -points to the head of the stack
-* @line_number: holds value for the line number in monty file
-*/
+ * push - pushes new node to the end of the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: the number of a line of the file
+ * Return: void
+ */
 
-int number;
-void push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *newnode = malloc(sizeof(stack_t));
+	char *arig = strtok(NULL, " \t\n");
+	int i = 0;
 
-	if (newnode == NULL)
+	if (arig)
 	{
-		printf("Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-    
-	newnode->n = number;
-	newnode->next = NULL;
-	newnode->prev = NULL;
+		if (arig[0] == '-')
+		{
+			i = 1;
+		}
+		while (arig[i] != '\0')
+		{
+			if (!isdigit(arig[i]))
+			{
+				fprintf(stderr, "L%u: usage: push integer\n", line_number);
+				exit(EXIT_FAILURE);
+			}
+			i++;
+		}
+		int value = atoi(arig);
 
-	if (*stack == NULL)
-		*stack = newnode;
+		stack_t *new_node = malloc(sizeof(stack_t));
+
+		if (!new_node)
+		{
+			fprintf(stderr, "Error: malloc failed\n");
+			exit(EXIT_FAILURE);
+		}
+		new_node->n = value;
+		new_node->prev = NULL;
+		new_node->next = *stack;
+		if (*stack)
+			(*stack)->prev = new_node;
+		*stack = new_node;
+	}
 	else
 	{
-		newnode->next = *stack;
-		(*stack)->prev = newnode;
-		*stack = newnode;
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
 	}
 }

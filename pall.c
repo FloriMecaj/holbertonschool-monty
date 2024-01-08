@@ -1,22 +1,20 @@
-#include "monty.h"
+#include"monty.h"
 
 /**
-* pall -prints all the values of the stack
-* @stack: -points to the head of the stack
-* @line_number: holds value for the line number in monty file
-*/
+ * pall - prints all values from the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: the number of a line of the file
+ * Return: void
+ */
 
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *virtual = *stack;
-	(void) line_number;
+	(void)line_number;
+	stack_t *current = *stack;
 
-	if (*stack == NULL)
-		return;
- 
-	while(virtual != NULL)
+	while (current != NULL)
 	{
-		printf("%d", virtual->n);
-		virtual = virtual->next;
+		printf("%d\n", current->n);
+		current = current->next;
 	}
 }
